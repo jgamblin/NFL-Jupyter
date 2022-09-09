@@ -27,6 +27,7 @@ jobs:
       run: |
          jupyter nbconvert --to notebook --execute fumblevsint.ipynb
          jupyter nbconvert --to notebook --execute RunVPass.ipynb
+         rm *.nbconvert.ipynb
     - name: Commit changes
       uses: EndBug/add-and-commit@v4
       with:
