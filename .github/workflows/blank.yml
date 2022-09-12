@@ -10,7 +10,7 @@ on:
     - cron: "0 */3 * * *" 
 jobs:
   build:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
     - uses: actions/setup-python@v1
@@ -25,13 +25,11 @@ jobs:
       env:
         GH_TOKEN:  ${{ secrets.GH_TOKEN }}
       run: |
-         jupyter nbconvert --to notebook --execute fumblevsint.ipynb
-         jupyter nbconvert --to notebook --execute RunVPass.ipynb
+         jupyter nbconvert --ExecutePreprocessor.timeout=-1 --to notebook --inplace --execute fumblevsint.ipynb
+         jupyter nbconvert --ExecutePreprocessor.timeout=-1 --to notebook --inplace --execute RunVPass.ipynb
     - name: Commit changes
       uses: EndBug/add-and-commit@v9
       with:
-        author_name: Jerry Gamblin
-        message: "Update NFL Stats"
-        add: "."
+          default_author: github_actions
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
